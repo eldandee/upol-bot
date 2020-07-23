@@ -1,1 +1,1 @@
-# upol-bot
+# Discord bot for the UPOL discord server
