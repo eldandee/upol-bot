@@ -6,9 +6,8 @@ from dotenv import load_dotenv
 
 bot = commands.Bot(command_prefix='!')
 
-token = os.getenv('DISCORD_TOKEN')
 @bot.event
 async def on_ready():
     print("Hello")
 
-bot.run('NzM1ODk1MTg3OTc2NDg3MDIz.Xxm6AQ.5AzEyH90tW2RsulVUjU5QUsjQWM')
+bot.run('PCuXv0a-LsKz4XTEIEwR7ir3i8YH-1oN')
