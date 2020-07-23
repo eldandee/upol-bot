@@ -62,12 +62,13 @@ async def clean(ctx, limit: int):
 @bot.command(name="tyden", pass_context=True)
 async def prikazy(ctx):
     year, tyden, day_of_week = datetime.datetime.today().isocalendar()
-    response="Je "
     if tyden % 2 == 0:
-        response+="sudý "
+        cal_type="Sudý"
     else:
-        response+="lichý "
-    response+="týden."
-    await ctx.send(response)
+        cal_type="Lichý"
+    embed = discord.Embed(title="Týden", color=0xE5DC37)
+    embed.set_footer(icon_url=ctx.author.avatar_url, text=str(ctx.author))
+    embed.add_field(name="Kalendářní", value="{} ({})".format(cal_type, tyden))
+    await ctx.send(embed=embed)
 
 bot.run('NzM1ODk1MTg3OTc2NDg3MDIz.XxnSWg.m0fFnI0w7xEzF_KBbeMNrbVsX_Y')
