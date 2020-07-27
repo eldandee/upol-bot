@@ -56,7 +56,7 @@ async def prikazy(ctx):
     response = '**Nápověda:**\n\
     !help - vypíše seznam příkazů\n\
     !tyden - vypíše kalendáří týden v roce\n\
-    !pocasi \{město\} - vypíše počasí v zadaném město\n''
+    !pocasi \{město\} - vypíše počasí v zadaném městě\n''
     await ctx.send(response)
 
 @bot.command(name="purge",pass_context=True)
