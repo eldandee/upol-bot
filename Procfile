@@ -1,1 +1,1 @@
-worker: py -3.6 upolbot.py
+worker: python3 upolbot.py
