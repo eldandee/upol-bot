@@ -4,10 +4,14 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import datetime
+import requests
 from discord.utils import get
 
 bot = commands.Bot(command_prefix='!')
 bot.remove_command('help')
+load_dotenv()
+TOKEN = os.getenv('DISCORD_TOKEN')
+GUILD = os.getenv('DISCORD_GUILD')
 
 def open_json():
     with open('upol.json') as json_file:
@@ -50,7 +54,9 @@ async def on_member_join(member):
 @bot.command(name="help", pass_context=True)
 async def prikazy(ctx):
     response = '**Nápověda:**\n\
-    *!help* - vypíše seznam příkazů\n'
+    !help - vypíše seznam příkazů\n\
+    !tyden - vypíše kalendáří týden v roce\n\
+    !pocasi \{město\} - vypíše počasí v zadaném město\n''
     await ctx.send(response)
 
 @bot.command(name="purge",pass_context=True)
@@ -71,4 +77,47 @@ async def prikazy(ctx):
     embed.add_field(name="Kalendářní", value="{} ({})".format(cal_type, tyden))
     await ctx.send(embed=embed)
 
-bot.run('NzM1ODk1MTg3OTc2NDg3MDIz.XxnSWg.m0fFnI0w7xEzF_KBbeMNrbVsX_Y')
+@bot.command(name="pocasi", pass_context=True)
+async def weather(ctx, *args):
+        token = '65b5078cfd3c4d143c2fa40d34377ef1'
+        city = "Brno"
+        if len(args) != 0:
+            city = " ".join(map(str, args))
+        url = (
+            "http://api.openweathermap.org/data/2.5/weather?q="
+            + city
+            + "&units=metric&lang=cz&appid="
+            + token
+        )
+        res = requests.get(url).json()
+
+        if str(res["cod"]) == "200":
+            description = "Aktuální počasí v městě " + res["name"] + ", " + res["sys"]["country"]
+            embed = discord.Embed(title="Počasí", description=description)
+            image = "http://openweathermap.org/img/w/" + res["weather"][0]["icon"] + ".png"
+            embed.set_thumbnail(url=image)
+            weather = res["weather"][0]["main"] + " (" + res["weather"][0]["description"] + ") "
+            temp = str(res["main"]["temp"]) + "°C"
+            feels_temp = str(res["main"]["feels_like"]) + "°C"
+            humidity = str(res["main"]["humidity"]) + "%"
+            wind = str(res["wind"]["speed"]) + "m/s"
+            clouds = str(res["clouds"]["all"]) + "%"
+            visibility = str(res["visibility"] / 1000) + " km" if "visibility" in res else "bez dat"
+            embed.add_field(name="Počasí", value=weather, inline=False)
+            embed.add_field(name="Teplota", value=temp, inline=True)
+            embed.add_field(name="Pocitová teplota", value=feels_temp, inline=True)
+            embed.add_field(name="Vlhkost", value=humidity, inline=True)
+            embed.add_field(name="Vítr", value=wind, inline=True)
+            embed.add_field(name="Oblačnost", value=clouds, inline=True)
+            embed.add_field(name="Viditelnost", value=visibility, inline=True)
+            await ctx.send(embed=embed)
+        elif str(res["cod"]) == "404":
+            await ctx.send("Město nenalezeno")
+        elif str(res["cod"]) == "401":
+            await ctx.send("Rip token -> Rebel pls fix")
+        else:
+            await ctx.send(
+                "Město nenalezeno! <:pepeGun:484470874246742018> (" + res["message"] + ")"
+            )
+
+bot.run(TOKEN)
