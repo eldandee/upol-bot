@@ -7,11 +7,14 @@ import datetime
 import requests
 from discord.utils import get
 
-bot = commands.Bot(command_prefix='!')
-bot.remove_command('help')
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
+
+bot = commands.Bot(command_prefix='!')
+bot.remove_command('help')
+
+
 
 def open_json():
     with open('upol.json') as json_file:
