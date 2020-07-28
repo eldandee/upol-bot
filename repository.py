@@ -1,3 +1,11 @@
+import json
+import pymongo
+
+# To config (now useless)
+MONGODB_URI = ''
+DB_NAME = ''
+
+
 def open_json():
     with open('upol.json') as json_file:
         data = json.load(json_file)

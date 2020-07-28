@@ -13,8 +13,7 @@ class WeatherCog(commands.Cog):
         city = Config.default_city if len(
             args) == 0 else " ".join(map(str, args))
 
-        url = (
-            f"http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&lang=cz&appid={Config.weather_token}")
+        url = Config.openweather_api_url.format(city, Config.weather_token)
         res = requests.get(url).json()
 
         if str(res["cod"]) == "200":
@@ -45,7 +44,8 @@ class WeatherCog(commands.Cog):
         elif str(res["cod"]) == "404":
             await ctx.send("Město nebylo nenalezeno.")
         elif str(res["cod"]) == "401":
-            await ctx.send('Nelze se připojit k API openweather. Kontaktuj tu pepegu.')
+            await ctx.send(
+                'Nelze se připojit k API openweather. Kontaktuj tu pepegu.')
         else:
             await ctx.send("Něco se pokazilo (" + res["message"] + ")")
 
