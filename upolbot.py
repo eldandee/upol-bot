@@ -43,9 +43,9 @@ def read_db():
 
 @bot.event
 async def on_ready():
-    print(
-        f'{bot.user} is connected to the following guild:'
-    )
+    print(f'{bot.user} is connected to the following guild:')
+    for guild in bot.guilds:
+        print(f"{guild.name} with members_count: {guild.member_count} and owner: {str(guild.owner)}")
 
 @bot.event
 async def on_member_join(member):
