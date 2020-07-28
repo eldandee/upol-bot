@@ -11,7 +11,7 @@ from config import Config
 load_dotenv()
 GUILD = os.getenv('DISCORD_GUILD')
 
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix=Config.prefix)
 bot.remove_command('help')
 
 
