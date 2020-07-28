@@ -6,9 +6,9 @@ from dotenv import load_dotenv
 import datetime
 import requests
 from discord.utils import get
+from config import Config
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
 bot = commands.Bot(command_prefix='!')
@@ -123,4 +123,4 @@ async def weather(ctx, *args):
                 "Město nenalezeno! <:pepeGun:484470874246742018> (" + res["message"] + ")"
             )
 
-bot.run(TOKEN)
+bot.run(Config.token)
