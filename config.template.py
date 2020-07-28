@@ -1,5 +1,7 @@
+import os
 class Config:
-    token: str = ''
+    load_dotenv()
+    token: str = os.getenv('DISCORD_TOKEN')
     prefix: str = '!'
     welcome_channel: int = 735899091371819032
     student_role: str = 'Student'
