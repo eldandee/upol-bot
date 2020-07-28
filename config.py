@@ -7,7 +7,7 @@ class Config:
     welcome_channel: int = 735899091371819032
     student_role: str = 'Student'
 
-    cogs = ['help', 'admin', 'calendar', 'weather','autopin']
+    cogs = ['help', 'admin', 'calendar', 'weather','autopin','name_day']
 
     weather_token = '65b5078cfd3c4d143c2fa40d34377ef1'
     default_city = 'Olomouc'
